@@ -41,7 +41,7 @@ def preresolve_hook(conduit):
 					ts.remove(pi.pkgtup)
 					conduit.info(2,'Adding %s to install list' % expk[pi.name])
 					ts.addInstall(expk[pi.name])
-	if (len(updates)!=0) and (len(removes)!=0):
+	if _check_ups_rem_rel(updates,removes) == True:
 		for pu in updates:
 			for pr in removes:
 				if pr.name == pu.name:
@@ -63,3 +63,6 @@ def protect_release(new,old):
 def _check_ups_rem_rel(ups,rems):
 	global relstr
 	if relstr is not None:
+		if (len(ups)!=0) and (len(rems)!=0):
+			return True
+	return False
